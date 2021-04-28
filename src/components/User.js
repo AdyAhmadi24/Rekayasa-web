@@ -6,7 +6,7 @@ const User = () => {
 
   useEffect(() => {
     setTimeout(async () => {
-      const res = await fetch("https://jsonplaceholder.typicode.com/users/1");
+      const res = await fetch("http://unhas.ac.id/v2/wp-json/wp/v2/posts/?_embed");
       const data = await res.json();
       setProfile(data);
     }, 3000);
@@ -18,9 +18,7 @@ const User = () => {
 
       {profile && (
         <div className="profile">
-          <h3>{profile.username} </h3>
-          <p>{profile.email}</p>
-          <a href={profile.website}> {profile.website}</a>
+          <a dangerouslySetInnerHTML={{ __html: profile.excerpt.rendered }} />
         </div>
       )}
 

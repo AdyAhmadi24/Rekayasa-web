@@ -1,30 +1,33 @@
 import React, { useEffect, useState } from "react";
 import SkeletonArticle from "../skeletons/SkeletonsArticle";
 import { Card, Button } from "react-bootstrap";
+import User from "./User";
 
 const Articles = () => {
   const [articles, setArticles] = useState(null);
 
   useEffect(() => {
     setTimeout(async () => {
-      const res = await fetch("http://unhas.ac.id/v2/wp-json/wp/v2/posts?per_page=9&page=2");
+      const res = await fetch("http://unhas.ac.id/v2/wp-json/wp/v2/posts/?_embed");
       const data = await res.json();
       setArticles(data);
     }, 3000);
   });
 
   return (
-    <div className="articles">
+    <div className="articles" padding-top="80px">
       <h2>Articles</h2>
 
       {articles &&
         articles.map((article) => (
           <div className="article" key={article}>
             <Card>
-              <Card.Header>{article.date}</Card.Header>
+              <Card.Header>{article.title.rendered}</Card.Header>
               <Card.Body>
-                <Card.Text>{article.slug}</Card.Text>
-                <Button variant="primary">Link Artikel</Button>
+                <Card.Text dangerouslySetInnerHTML={{ __html: article.excerpt.rendered }}></Card.Text>
+                <Button variant="primary" href={"/User" + article.id} key={article.id}>
+                  Link Artikel
+                </Button>
               </Card.Body>
             </Card>
           </div>

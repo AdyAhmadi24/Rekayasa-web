@@ -37,6 +37,6 @@ h2 {
   margin: 0 auto;
   padding: 20px;
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 2fr;
   gap: 100px;
 }
