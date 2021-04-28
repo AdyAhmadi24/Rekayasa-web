@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SkeletonArticle from "../skeletons/SkeletonsArticle";
 import { Card, Button } from "react-bootstrap";
+import { Route, Link } from "react-router-dom";
 import User from "./User";
 
 const Articles = () => {
@@ -11,11 +12,11 @@ const Articles = () => {
       const res = await fetch("http://unhas.ac.id/v2/wp-json/wp/v2/posts/?_embed");
       const data = await res.json();
       setArticles(data);
-    }, 3000);
+    }, 0);
   });
 
   return (
-    <div className="articles" padding-top="80px">
+    <div className="articles">
       <h2>Articles</h2>
 
       {articles &&
@@ -25,7 +26,7 @@ const Articles = () => {
               <Card.Header>{article.title.rendered}</Card.Header>
               <Card.Body>
                 <Card.Text dangerouslySetInnerHTML={{ __html: article.excerpt.rendered }}></Card.Text>
-                <Button variant="primary" href={"/User" + article.id} key={article.id}>
+                <Button variant="primary" href="/User" component={User}>
                   Link Artikel
                 </Button>
               </Card.Body>

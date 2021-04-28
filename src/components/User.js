@@ -1,28 +1,34 @@
 import React, { useEffect, useState } from "react";
-import SkeletonProfile from "../skeletons/SkeletonProfile";
+import SkeletonsArticle from "../skeletons/SkeletonsArticle";
+import { Card, Button } from "react-bootstrap";
+import Navabar from "../Navbar/Navbar";
 
 const User = () => {
-  const [profile, setProfile] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     setTimeout(async () => {
       const res = await fetch("http://unhas.ac.id/v2/wp-json/wp/v2/posts/?_embed");
       const data = await res.json();
-      setProfile(data);
+      setUser(data);
     }, 3000);
   });
 
   return (
     <div className="user">
-      <h2>User Details</h2>
+      <Navabar />
+      <h2>Artikel</h2>
 
-      {profile && (
-        <div className="profile">
-          <a dangerouslySetInnerHTML={{ __html: profile.excerpt.rendered }} />
-        </div>
-      )}
+      {user &&
+        user.map((user) => (
+          <div className="user" key={user}>
+            <Card.Body>
+              <Card.Text dangerouslySetInnerHTML={{ __html: user.content.rendered + user.id }}></Card.Text>
+            </Card.Body>
+          </div>
+        ))}
 
-      {!profile && <SkeletonProfile theme="dark" />}
+      {!user && [1, 2, 3, 4, 5].map((n) => <SkeletonsArticle key={n} theme="dark" />)}
     </div>
   );
 };
